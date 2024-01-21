@@ -1,0 +1,43 @@
+.games-container {
+    overflow-x: hidden; 
+  }
+  
+  .cards-container {
+    display: flex;
+    overflow-x: auto;
+    margin-bottom: 20px; 
+    max-width: 100%;
+    align-items: center;
+  }
+  
+  .cards-container .cards {
+    display: flex;
+    flex-wrap: nowrap; 
+  }
+  
+  .cards-container::-webkit-scrollbar{
+    width: 15px;
+  }
+  
+  .cards-container::-webkit-scrollbar-corner{
+    background:transparent;
+    border-radius: 5px;
+  }
+  .cards-container::-webkit-scrollbar-track{
+    background-color: #40404032;
+    border-radius: 5px;
+  }
+  
+  .cards-container::-webkit-scrollbar-thumb{
+    background-color: #404040;
+    border-radius: 14px;
+    border: 3px solid rgb(53, 53, 53);
+  }
+  .games-container button{
+    margin: 0px;
+    font-size: 20px;
+  }
+  .games-container button:hover{
+    cursor: pointer;
+    background-color: #e06851;
+  }

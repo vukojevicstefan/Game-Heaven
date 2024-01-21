@@ -1,0 +1,141 @@
+/* GameDetailsModal.css */
+
+.game-details-modal {
+    display: flex;
+    position: fixed;
+    width: 800px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    border-radius: 25px;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    color: white; /* Set text color to white */
+  }
+  
+  .left-section {
+    flex: 1; /* Occupy available space */
+    margin-right: 20px; /* Add some spacing between sections */
+  }
+  
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+  
+  .game-details-modal h2 {
+    margin-bottom: 10px;
+  }
+  
+  .game-details-modal h3 {
+    margin-bottom: 10px;
+  }
+  
+  .game-details-modal p {
+    margin-bottom: 10px;
+  }
+  
+  .game-details-modal img {
+    max-width: 100%; /* Ensure the image fits within the modal */
+    margin-bottom: 10px; /* Add margin to the image */
+  }
+  
+  .comments-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 200px; /* Set max height for the comments list */
+    overflow-y: auto; /* Enable vertical scroll if needed */
+  }
+  .comments-list li{
+    margin-top: 20px;
+  }
+  .game-details-modal button {
+    display: flex;
+    height: fit-content;
+    padding: 5px 10px;
+    font-size: large;
+    color: white;
+    border: none;
+    cursor: pointer;
+    
+  }
+  
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px); 
+    z-index: 999; 
+  }
+  .Review{
+    display: flex;
+    justify-content: space-between;
+  }
+  form{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 20px;
+  }
+  form label{
+    display: flex;
+    margin-top: 5px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  form label input{
+    width: 30px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color:white;
+  } 
+  form label textarea{
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color:white;
+  }
+  form button{
+    align-self: center;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  .comments-list::-webkit-scrollbar{
+    width: 15px;
+  }
+  
+  .comments-list::-webkit-scrollbar-corner{
+    background:transparent;
+    border-radius: 5px;
+  }
+  .comments-list::-webkit-scrollbar-track{
+    background-color: #40404032;
+    border-radius: 5px;
+  }
+  .comments-list::-webkit-scrollbar-thumb{
+    background-color: #404040;
+    border-radius: 14px;
+    border: 3px solid rgb(53, 53, 53);
+  }
+  .add-to-collection-form select{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+.add-to-collection-form button{
+  font-size: 10px !important;
+}
+.add-to-collection-form label{
+  font-size: 15px;
+}
+select:focus {
+  background-color: black
+}

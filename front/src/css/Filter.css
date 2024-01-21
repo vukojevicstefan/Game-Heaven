@@ -1,0 +1,31 @@
+/* Filter.css */
+
+.filter-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .filter-container label {
+    margin-right: 10px;
+    margin-bottom: 0px;
+  }
+  
+  .filter-container input {
+    padding: 8px;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    color:white;
+  }
+  
+  .filter-container button {
+    margin: 0px;
+    font-size: 15px !important;
+  }
+  
