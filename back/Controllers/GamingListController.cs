@@ -156,90 +156,117 @@ public class GamingListController : ControllerBase
         }
     }
 
-[HttpGet("GetGamingListsWithGames")]
-public async Task<ActionResult> GetGamingListsWithGames()
-{
-    try
+    [HttpGet("GetGamingListsWithGames")]
+    public async Task<ActionResult> GetGamingListsWithGames()
     {
-        if (!User.Identity.IsAuthenticated)
+        try
         {
-            return BadRequest("No logged-in user. Please log in.");
-        }
-
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-
-        if (identity == null)
-        {
-            return BadRequest("Error with getting the current user");
-        }
-
-        var userClaims = identity.Claims;
-        int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
-
-        var player = await Context.Players
-            .Where(p => p.ID == id)
-            .Include(p => p.GamingListsOfPlayer)
-                .ThenInclude(p => p.GamesInGamingList)
-                    .ThenInclude(p => p.Game)
-                        .ThenInclude(p => p.ReviewsOfGame)
-            .FirstOrDefaultAsync();
-
-        if (player == null)
-            return BadRequest("Error with getting data about the current user");
-
-        // Convert the enum values to strings and calculate average rating
-        var gamingListsWithGamesAndRating = player.GamingListsOfPlayer.Select(gamingList => new
-        {
-            Id = gamingList.ID,
-            Name = gamingList.ListName,
-            GamesInGamingList = gamingList.GamesInGamingList.Select(gameInList => new
+            if (!User.Identity.IsAuthenticated)
             {
-                GameId = gameInList.Game.ID,
-                Title = gameInList.Game.Title,
-                Genre = Enum.GetName(typeof(Genre), gameInList.Game.Genre),
-                Platform = Enum.GetName(typeof(Platform), gameInList.Game.Platform),
-                Description = gameInList.Game.Description,
-                Image = gameInList.Game.Image,
-                Rating = gameInList.Game.ReviewsOfGame.Any()
-                    ? gameInList.Game.ReviewsOfGame.Average(review => review.Rating)
-                    : 0
-            })
-        });
+                return BadRequest("No logged-in user. Please log in.");
+            }
 
-        return Ok(gamingListsWithGamesAndRating);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+            {
+                return BadRequest("Error with getting the current user");
+            }
+
+            var userClaims = identity.Claims;
+            int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
+
+            var player = await Context.Players
+                .Where(p => p.ID == id)
+                .Include(p => p.GamingListsOfPlayer)
+                    .ThenInclude(p => p.GamesInGamingList)
+                        .ThenInclude(p => p.Game)
+                            .ThenInclude(p => p.ReviewsOfGame)
+                .FirstOrDefaultAsync();
+
+            if (player == null)
+                return BadRequest("Error with getting data about the current user");
+
+            var gamingListsWithGamesAndRating = player.GamingListsOfPlayer.Select(gamingList => new
+            {
+                Id = gamingList.ID,
+                Name = gamingList.ListName,
+                GamesInGamingList = gamingList.GamesInGamingList.Select(gameInList => new
+                {
+                    GameId = gameInList.Game.ID,
+                    Title = gameInList.Game.Title,
+                    Genre = Enum.GetName(typeof(Genre), gameInList.Game.Genre),
+                    Platform = Enum.GetName(typeof(Platform), gameInList.Game.Platform),
+                    Description = gameInList.Game.Description,
+                    Image = gameInList.Game.Image,
+                    Rating = gameInList.Game.ReviewsOfGame.Any()
+                        ? gameInList.Game.ReviewsOfGame.Average(review => review.Rating)
+                        : 0
+                })
+            });
+
+            return Ok(gamingListsWithGamesAndRating);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-    catch (Exception e)
+
+    [HttpDelete("DeleteGamingList/{listName}")]
+    public async Task<ActionResult> DeleteGamingList(string listName)
     {
-        return BadRequest(e.Message);
+        try
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return BadRequest("No logged-in user. Please log in.");
+            }
+
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+            if (identity == null)
+            {
+                return BadRequest("Error with getting the current user");
+            }
+
+            var userClaims = identity.Claims;
+            int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
+
+            var player = await Context.Players
+                .Where(p => p.ID == id)
+                .Include(p => p.GamingListsOfPlayer)
+                    .ThenInclude(p => p.GamesInGamingList)
+                        .ThenInclude(p => p.Game)
+                            .ThenInclude(p => p.ReviewsOfGame)
+                .FirstOrDefaultAsync();
+
+            if (player == null)
+                return BadRequest("Error with getting data about the current user");
+
+            var list = await Context.GamingLists.Where(l => l.ListName == listName && l.CreatorOfGamingList == player).Include(l => l.GamesInGamingList).FirstOrDefaultAsync();
+
+            if (list == null)
+                return BadRequest("There is no game list with that name");
+
+            var ggList = await Context.Game_GamingLists.Where(gg => gg.GamingList == list).FirstOrDefaultAsync();
+
+            if (ggList == null)
+                return BadRequest("Error with findind connection between list and games");
+
+            Context.GamingLists.Remove(list);
+            Context.Game_GamingLists.Remove(ggList);
+
+            await Context.SaveChangesAsync();
+
+            return Ok("Successfully deleted gaming list");
+
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
-}
-
-[HttpDelete("DeleteGamingList/{listName}")]
-public async Task<ActionResult> DeleteGamingList(string listName){
-try{
-    var list=await Context.GamingLists.Where(l=>l.ListName==listName).Include(l=>l.GamesInGamingList).FirstOrDefaultAsync();
-
-    if(list==null)
-        return BadRequest("There is no game list with that name");
-    
-    var ggList=await Context.Game_GamingLists.Where(gg=>gg.GamingList==list).FirstOrDefaultAsync();
-
-    if(ggList==null)
-        return BadRequest("Error with findind connection between list and games");
-    
-    Context.GamingLists.Remove(list);
-    Context.Game_GamingLists.Remove(ggList);
-
-    await Context.SaveChangesAsync();
-
-    return Ok("Successfully deleted gaming list");
-
-}
-catch(Exception e)
-{
-    return BadRequest(e.Message);
-}
-}
 
 
 }
