@@ -41,3 +41,6 @@
     cursor: pointer;
     background-color: #e06851;
   }
+  .delete-button{
+    margin-left: 20px !important;
+  }

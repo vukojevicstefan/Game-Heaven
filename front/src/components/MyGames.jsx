@@ -93,13 +93,37 @@ const MyGames = () => {
     return null; // Optionally, you can return null to prevent rendering the login/register form
   }
 
+  const handleDeleteCollection = async (collectionName) => {
+    try {
+      // Make an HTTP request to delete the collection
+      await axios.delete(`http://localhost:5163/GamingList/DeleteGamingList/${encodeURIComponent(collectionName)}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+      });
+  
+      // Update state to remove the deleted collection
+      setCollectionsData((prevCollections) =>
+        prevCollections.filter((collection) => collection.name !== collectionName)
+      );
+    } catch (error) {
+      console.error('Error deleting collection:', error);
+    }
+  };
+  
   return (
     <div className="games-container">
       <button onClick={handleOpenCreateModal}>Add Collection</button>
 
       {collectionsData.sort((a, b) => b.gamesInGamingList.length - a.gamesInGamingList.length).map((collection) => (
         <div key={collection.name}>
-          <h1>{collection.name}</h1>
+          <h1>
+            {collection.name}
+            <button className='delete-button' onClick={() => handleDeleteCollection(collection.name)}>
+              Delete
+            </button>
+          </h1>
           <div className="cards-container">
             {collection.gamesInGamingList && (
               <div className="cards">
