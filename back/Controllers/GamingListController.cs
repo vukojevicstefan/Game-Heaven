@@ -251,11 +251,11 @@ public class GamingListController : ControllerBase
 
             var ggList = await Context.Game_GamingLists.Where(gg => gg.GamingList == list).FirstOrDefaultAsync();
 
-            if (ggList == null)
-                return BadRequest("Error with findind connection between list and games");
+            if (ggList != null)
+                Context.Game_GamingLists.Remove(ggList);
 
             Context.GamingLists.Remove(list);
-            Context.Game_GamingLists.Remove(ggList);
+
 
             await Context.SaveChangesAsync();
 
