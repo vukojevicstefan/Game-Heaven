@@ -24,7 +24,7 @@ const CreateCollectionModal = ({ onClose, onAddCollection }) => {
         }
       );
 
-      if (response.statusText=='OK') {
+      if (response.statusText==='OK') {
         onAddCollection(newCollectionName);
       } else {
         console.error('Error creating collection:', response.statusText);
@@ -42,11 +42,12 @@ const CreateCollectionModal = ({ onClose, onAddCollection }) => {
         <input
           type="text"
           placeholder="Enter Collection Name"
+          name='CollectionNameInput'
           value={newCollectionName}
           onChange={(e) => setNewCollectionName(e.target.value)}
         />
         <div className='buttons'>
-          <button onClick={handleCreateCollection}>Create</button>
+          <button name='ButtonCreate' onClick={handleCreateCollection}>Create</button>
           <button onClick={onClose}>Cancel</button>
         </div>
       </div>

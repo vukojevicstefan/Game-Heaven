@@ -114,11 +114,11 @@ const MyGames = () => {
   
   return (
     <div className="games-container">
-      <button onClick={handleOpenCreateModal}>Add Collection</button>
+      <button name='AddCollection' onClick={handleOpenCreateModal}>Add Collection</button>
 
       {collectionsData.sort((a, b) => b.gamesInGamingList.length - a.gamesInGamingList.length).map((collection) => (
         <div key={collection.name}>
-          <h1>
+          <h1 name={collection.name}>
             {collection.name}
             <button className='delete-button' onClick={() => handleDeleteCollection(collection.name)}>
               Delete

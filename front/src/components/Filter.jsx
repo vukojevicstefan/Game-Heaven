@@ -48,7 +48,7 @@ const Filter = ({ onFilterChange }) => {
         Genre:
         <input type="text" name="genre" value={filterCriteria.genre} onChange={handleInputChange} />
       </label>
-      <button onClick={handleFilterClick}>Apply Filter</button>
+      <button name='Apply' onClick={handleFilterClick}>Apply Filter</button>
     </div>
   );
 };

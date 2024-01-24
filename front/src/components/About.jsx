@@ -8,7 +8,7 @@ export default function About() {
   }
   
   return <h1>
-    Game Haven is a project made for course named Testing and Quality of Software. 
+    Game Haven is a project made for course "Testing and Quality of Software". 
     University of Nis, Faculty of electrical engineering, Computer Science, Jan 2024.
     Developers: Stefan Vukojevic and Milos Stanojevic.
     Thanks for reading :)
