@@ -166,7 +166,7 @@ const LoginRegister = () => {
             onChange={handleRegisterChange}
           />
         </label>
-        <button type="submit">Register</button>
+        <button name='button-register' type="submit">Register</button>
       </form>
     </div>
   </div>

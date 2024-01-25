@@ -158,7 +158,7 @@ const GameDetailsModal = ({ game, onClose }) => {
         <div className='add-to-collection-form'>
             <label>
               Select Collection:
-              <select value={selectedCollection} onChange={handleCollectionChange}>
+              <select value={selectedCollection} name="select-collection" onChange={handleCollectionChange}>
                 <option value='' disabled>Select a collection</option>
                 {collections.map((collection) => (
                   <option key={collection.id} value={collection.name}>
@@ -167,12 +167,12 @@ const GameDetailsModal = ({ game, onClose }) => {
                 ))}
               </select>
             </label>
-            <button type="button" onClick={handleAddToCollection}>
+            <button name='buttonAddGameToCollection'type="button" onClick={handleAddToCollection}>
               Add to Collection
             </button>
           </div>
           <h2>{game.title}</h2>
-          <img src={require("./" + game.image)} alt={game.title} />
+          <img src={require("./" + game.image)} style={{ maxHeight: '250px' }} alt={game.title} />
           <p>Description: {game.description}</p>
           <p>Genre: {game.genre}</p>
           <p>Rating: {game.rating}</p>
@@ -198,6 +198,7 @@ const GameDetailsModal = ({ game, onClose }) => {
               Your Rating:
               <input
                 type="number"
+                name='my-rating'
                 min="1"
                 max="5"
                 step="1"
@@ -208,11 +209,13 @@ const GameDetailsModal = ({ game, onClose }) => {
             <label>
               Your Comment:
               <textarea
+                name='my-comment'
+                className='my-comment'
                 value={newReview.comment}
                 onChange={handleCommentChange}
               />
             </label>
-            <button type="button" onClick={handleSubmitReview}>
+            <button name='submit-review' type="button" onClick={handleSubmitReview}>
               Submit Review
             </button>
           </form>
