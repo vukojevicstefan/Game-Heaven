@@ -66,39 +66,6 @@ public class LoginController : ControllerBase
     }
 
 
-    [HttpGet("UsersEndpoint")]
-    public IActionResult UsersEndpoint()
-    {
-
-        var currentUser = GetCurrentUser();
-
-        return Ok(currentUser);
-    }
-
-    private object GetCurrentUser()
-    {
-        if (!User.Identity.IsAuthenticated)
-        {
-            return BadRequest("No logged-in user. Please log in.");
-        }
-
-        var identity = HttpContext.User.Identity as ClaimsIdentity;
-
-        if (identity != null)
-        {
-            var userClaims = identity.Claims;
-            int id = int.Parse(userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Sid)!.Value);
-
-            return new Player
-            {
-                UserName = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier)!.Value,
-                Email = userClaims.FirstOrDefault(p => p.Type == ClaimTypes.Email)!.Value,
-                ID = id
-            };
-        }
-        return null;
-    }
-
     [HttpPost("GetToken")]
     public async Task<ActionResult> GetToken([FromBody] UserAuth player)
     {

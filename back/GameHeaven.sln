@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameHeaven", "GameHeaven.csproj", "{5F9E1733-E344-4C35-8A3C-B289E3BCBA82}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NUnit Tests", "..\NUnit Tests\NUnit Tests\NUnit Tests.csproj", "{B6401DAB-7C15-4037-B180-FED2C886A08F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5F9E1733-E344-4C35-8A3C-B289E3BCBA82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F9E1733-E344-4C35-8A3C-B289E3BCBA82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F9E1733-E344-4C35-8A3C-B289E3BCBA82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6401DAB-7C15-4037-B180-FED2C886A08F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6401DAB-7C15-4037-B180-FED2C886A08F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6401DAB-7C15-4037-B180-FED2C886A08F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6401DAB-7C15-4037-B180-FED2C886A08F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

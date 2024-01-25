@@ -56,11 +56,11 @@ public class GamingListController : ControllerBase
 
             GamingList gamingList = new GamingList
             {
-                ListName = gamingListTitle
+                ListName = gamingListTitle,
+                GamesInGamingList = new List<Game_GamingList>()
             };
 
             await Context.GamingLists.AddAsync(gamingList);
-
 
             player.GamingListsOfPlayer.Add(gamingList);
 
@@ -236,9 +236,9 @@ public class GamingListController : ControllerBase
             var player = await Context.Players
                 .Where(p => p.ID == id)
                 .Include(p => p.GamingListsOfPlayer)
-                    .ThenInclude(p => p.GamesInGamingList)
-                        .ThenInclude(p => p.Game)
-                            .ThenInclude(p => p.ReviewsOfGame)
+                    .ThenInclude(p => p!.GamesInGamingList)
+                        .ThenInclude(p => p!.Game)
+                            .ThenInclude(p => p!.ReviewsOfGame)
                 .FirstOrDefaultAsync();
 
             if (player == null)

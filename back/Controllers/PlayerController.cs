@@ -21,7 +21,11 @@ public class PlayerController : ControllerBase
     {
         try
         {
-            if (!User.Identity.IsAuthenticated)
+            if (User == null)
+            {
+                return BadRequest("User is null");
+            }
+            if (!User.Identity!.IsAuthenticated)
             {
                 return BadRequest("No logged-in user. Please log in.");
             }
