@@ -81,7 +81,7 @@ const LoginRegister = () => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     console.log('Register data:', registerData);
-
+  
     try {
       const response = await fetch(`http://localhost:5163/Login/SignUp/${registerData.registerUsername}/${registerData.registerEmail}/${registerData.registerPassword}/${registerData.registerPassword}`, {
         method: 'POST',
@@ -89,13 +89,15 @@ const LoginRegister = () => {
           'Content-Type': 'application/json',
         },
       });
-
+  
       if (response.ok) {
         console.log('Registration successful!');
+        
+        alert('Successfully registered!');
+  
         window.location.reload();
       } else {
         console.error('Registration failed.');
-        // You can handle the error response here
       }
     } catch (error) {
       console.error('An error occurred during registration:', error);
@@ -104,9 +106,8 @@ const LoginRegister = () => {
 
   const existingToken = localStorage.getItem('token');
   if (existingToken) {
-    // If a token is present, redirect the user (adjust the redirect path as needed)
     window.location.href = '/';
-    return null; // Optionally, you can return null to prevent rendering the login/register form
+    return null; 
   }
 
   return (
