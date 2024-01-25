@@ -83,11 +83,21 @@ public class Tests : PageTest
         await Expect(page).ToHaveTitleAsync("Game Heaven");
 
         await page.FillAsync("input[name=registerUsername]", "username");
-        await page.FillAsync("input[name=registerEmail]", "email@gmail.com");
+        await page.FillAsync("input[name=registerEmail]", "example@gmail.com");
         await page.FillAsync("input[name=registerPassword]", "password");
         await page.ClickAsync("button[name=button-register]");
 
-        Assert.AreEqual("http://localhost:3000/login-register", page.Url);
+        await Task.Delay(20000);
+        Boolean isRegistered = false;
+        page.Dialog += (_, dialog) =>
+        {
+            if (dialog.Message == "Successfully registered!")
+            {
+                dialog.AcceptAsync();
+                isRegistered = true;
+            }
+        };
+        Assert.IsTrue(isRegistered);
     }
     [Test]
     public async Task FilterGamesByNameAndRating()
