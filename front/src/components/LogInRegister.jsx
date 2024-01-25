@@ -92,8 +92,6 @@ const LoginRegister = () => {
   
       if (response.ok) {
         console.log('Registration successful!');
-        
-        alert('Successfully registered!');
   
         window.location.reload();
       } else {
